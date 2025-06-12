@@ -1,0 +1,56 @@
+.nav a {
+  text-decoration: none;
+  color: black;
+}
+
+.nav h1 {
+  font-family: monospace;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+article h2 {
+  text-align: center;
+}
+
+/* Estiliza a seção agenda */
+.agenda {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-left: 4px solid rgb(41, 0, 221); /* destaque visual */
+  border-radius: 6px;
+  margin-top: 20px;
+}
+
+/* Estiliza cada bloco de evento */
+.evento {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+/* Animação leve ao passar o mouse */
+.evento:hover {
+  transform: translateY(-3px);
+}
+
+/* Título do evento */
+.evento h3 {
+  margin-bottom: 5px;
+  font-size: 1.2rem;
+  color: rgb(41, 0, 221);
+}
+
+/* Texto do evento */
+.evento p {
+  margin: 4px 0;
+  font-size: 0.95rem;
+  color: #333;
+}

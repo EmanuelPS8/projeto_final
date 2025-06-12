@@ -1,0 +1,279 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.logo {
+  color: #333;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+
+.logo a {
+  text-decoration: none;
+  color: #333;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #fff;
+}
+
+.nav {
+  background-color: #ffffff;
+  font-family: monospace;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  margin: 0px;
+}
+
+.nav ul li a {
+  text-decoration: none;
+  color: #333;
+  display: block;
+}
+
+.nav ul li {
+  margin-left: 10px;
+  list-style: none;
+  color: #333;
+  font-size: 1rem;
+}
+
+.nav ul {
+  display: flex;
+  gap: 10px;
+}
+
+.nav a:hover {
+  color: #000;
+}
+
+.busca input {
+  padding: 6px;
+  border-radius: 4px;
+}
+
+.slider {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  margin: 50px auto; /* Centraliza o slider */
+  overflow: hidden;
+}
+
+.slider img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 5px;
+}
+
+/* Botões laterais */
+.botao {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  border: none;
+  padding: 12px;
+  font-size: 24px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+/* Esquerda */
+.botao-esquerda {
+  left: 10px;
+}
+
+/* Direita */
+.botao-direita {
+  right: 10px;
+}
+
+/* Mostrar botões ao passar o mouse */
+.slider:hover .botao {
+  opacity: 1;
+}
+
+.conteudo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0 30px;
+  max-width: 100%;
+}
+
+.principal {
+  width: 900px;
+}
+
+aside {
+  width: 300px;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-left: 4px solid rgb(41, 0, 221); /* mesmo destaque da agenda */
+  margin-top: 30px;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+aside h2 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  color: rgb(41, 0, 221);
+}
+
+aside ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+aside li {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 4px;
+  transition: transform 0.2s ease;
+}
+
+aside li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+aside li a {
+  color: #0077cc;
+  text-decoration: none;
+  font-weight: 500;
+  display: block;
+}
+
+aside li a:hover {
+  text-decoration: underline;
+}
+
+.colunas {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 20px 0;
+  gap: 30px;
+}
+
+.coluna-img {
+  text-align: center;
+  max-width: 200px;
+}
+
+.coluna-img img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;
+}
+
+.coluna-img h3 {
+  font-size: 1rem;
+  margin: 5px 0;
+}
+
+.coluna-img p {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* Estiliza a seção agenda */
+.agenda {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-left: 4px solid rgb(41, 0, 221); /* destaque visual */
+  border-radius: 6px;
+  margin-top: 20px;
+}
+
+/* Estiliza cada bloco de evento */
+.evento {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+/* Animação leve ao passar o mouse */
+.evento:hover {
+  transform: translateY(-3px);
+}
+
+/* Título do evento */
+.evento h3 {
+  margin-bottom: 5px;
+  font-size: 1.2rem;
+  color: rgb(41, 0, 221);
+}
+
+/* Texto do evento */
+.evento p {
+  margin: 4px 0;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.galeria {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-left: 4px solid #d00;
+  border-radius: 6px;
+  margin-top: 30px;
+}
+
+.galeria h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #d00;
+}
+
+/* Grade responsiva para as imagens */
+.galeria-imagens {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* Imagens da galeria */
+.galeria-imagens img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 6px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Efeito hover nas imagens */
+.galeria-imagens img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}

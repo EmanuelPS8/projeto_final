@@ -1,0 +1,39 @@
+.nav a {
+  text-decoration: none;
+  color: black;
+}
+
+.nav h1 {
+  font-family: monospace;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  font-family: monospace;
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.galeria {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 80%;
+  margin: auto;
+}
+
+.imagem {
+  padding: 5px;
+  margin: 5px;
+  flex: 1;
+  min-width: 250px;
+  max-width: 600px;
+}
+
+.imagem img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
