@@ -7,8 +7,8 @@
     <meta name="author" content="Emanuel Pereira Schlickmann">
     <meta name="robots" content="index, follow">
     <title>Projeto</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <rel="icon" href="/img/..." type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <rel="icon" href="img/..." type="image/x-icon">
     </head>
     <body>
         <header>
@@ -17,10 +17,10 @@
                 <ul>
                 <li><a href="">Grupos de trabalho</a></li>
                 <li><a href="">Vídeos</a></li>
-                <li><a href="noticias.html">Notícias</a></li>
+                <li><a href="html/noticias.html">Notícias</a></li>
                 <li><a href="">Colunas</a></li>
-                <li><a href="galeria.html">Galeria</a></li>
-                <li><a href="agenda.html">Agenda</a></li>
+                <li><a href="html/galeria.html">Galeria</a></li>
+                <li><a href="html/agenda.html">Agenda</a></li>
                 </ul>
             </nav>
             <div class="busca">
@@ -41,19 +41,19 @@
                         <h2>Colunas</h2>
                         <div class="colunas">
                             <div class="coluna-img">
-                                <img src="/img/col1.jpg" alt="">
+                                <img src="img/col1.jpg" alt="">
                                 <h3>nome pessoa</h3>
                                 <p><em>Descrição</em></p>
                             </div>
                             
                             <div class="coluna-img">
-                                <img src="/img/col2.jpg" alt="">
+                                <img src="img/col2.jpg" alt="">
                                 <h3>nome pessoa</h3>
                                 <p><em>Descrição</em></p>
                             </div>
 
                             <div class="coluna-img  ">
-                                <img src="/img/col3.jpg" alt="">
+                                <img src="img/col3.jpg" alt="">
                                 <h3>nome pessoa</h3>
                                 <p><em>Descrição</em></p>
                             </div>    
@@ -92,9 +92,9 @@
                         <div class="galeria">
                             <h2>Galeria</h2>
                             <div class="galeria-imagens">
-                                <img src="/img/img1.jpg" alt="Imagem 1">
-                                <img src="/img/img2.jpg" alt="Imagem 2">
-                                <img src="/img/img3.jpg" alt="Imagem 3">
+                                <img src="img/img1.jpg" alt="Imagem 1">
+                                <img src="img/img2.jpg" alt="Imagem 2">
+                                <img src="img/img3.jpg" alt="Imagem 3">
                             </div>
                         </div>
                     </article>
@@ -102,15 +102,69 @@
             </div>
 
             <aside>
-                <h2>Notícias taltal</h2>
-                <ul>
-                <li><a href="#">Notícia 1</a></li>
-                <li><a href="#">Notícia 2</a></li>
-                </ul>
+                <div class="noticias-aside">
+                    <h2>Notícias taltal</h2>
+                    <ul>
+                        <li><a href="#">Notícia 1</a></li>
+                        <li><a href="#">Notícia 2</a></li>
+                    </ul>
+                </div>
+                <div class="login-usuario">
+                    <!-- Card com botão -->
+                    <div class="card-login">
+                    <h2>Área Restrita</h2>
+                    <button id="abrirModal">Login</button>
+                    </div>
+
+                    <!-- Modal -->
+                    <div id="modalLogin" class="modal">
+                        <div class="modal-conteudo">
+                            <span class="fechar" id="fecharModal">&times;</span>
+                            <h3>Login</h3>
+                            <form>
+                            <label for="email">E-mail:</label>
+                            <input type="email" id="email" required>
+
+                            <label for="senha">Senha:</label>
+                            <input type="password" id="senha" required>
+
+                            <button type="submit">Entrar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </aside>
         </main>
 
-        <footer></footer>
-        <script src="/script/script.js"></script>
+        <footer>
+            <footer>
+  <div class="footer-container">
+    <div class="footer-col">
+      <h4>Menu</h4>
+      <ul>
+        <li><a href="#">Início</a></li>
+        <li><a href="html/noticias.html">Notícias</a></li>
+        <li><a href="#">Colunas</a></li>
+        <li><a href="html/galeria.html">Galeria</a></li>
+        <li><a href="html/agenda.html">Agenda</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <p>Email: email@.com</p>
+      <p>Telefone: (00) 0000-0000</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Créditos</h4>
+      <p>&copy; 2025 - nome nome</p>
+      <p>Todos os direitos reservados.</p>
+    </div>
+  </div>
+</footer>
+
+        </footer>
+        <script src="script/script.js"></script>
     </body>
 </html>
