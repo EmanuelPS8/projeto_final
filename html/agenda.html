@@ -12,31 +12,77 @@
         <h1><a href="/index.html">Logo</a></h1>
       </nav>
     </header>
+
     <main>
       <section>
         <article>
           <h2>Eventos</h2>
-          <div class="agenda">
-            <div class="evento">
-              <h3>Evento 1</h3>
-              <p>Descrição do evento 1.</p>
-              <p><strong>Data:</strong> 01/01/2024</p>
-            </div>
-
-            <div class="evento">
-              <h3>Evento 2</h3>
-              <p>Descrição do evento 2.</p>
-              <p><strong>Data:</strong> 02/01/2024</p>
-            </div>
-
-            <div class="evento">
-              <h3>Evento 3</h3>
-              <p>Descrição do evento 3.</p>
-              <p><strong>Data:</strong> 03/01/2024</p>
-            </div>
+          <div class="agenda" id="evento">
+            <!-- Eventos carregados dinamicamente -->
           </div>
         </article>
       </section>
     </main>
+
+    <script>
+      fetch("http://localhost:5000/api/events")
+        .then((response) => response.json())
+        .then((eventArray) => {
+          const container = document.getElementById("evento");
+
+          if (eventArray.length === 0) {
+            container.innerHTML = "<p>Nenhum evento cadastrado.</p>";
+            return;
+          }
+
+          container.innerHTML = eventArray
+            .map((event, index) => {
+              const resumo =
+                event.content.length > 150
+                  ? event.content.substring(0, 150) + "..."
+                  : event.content;
+
+              const precisaVerMais = event.content.length > 150;
+              const dataFormatada = new Date(event.date).toLocaleDateString(
+                "pt-BR"
+              );
+
+              return `
+    <div class="evento">
+      <h3>${event.title}</h3>
+      <small>${dataFormatada}</small>
+      <p id="conteudo-${index}">${resumo}</p>
+      ${
+        precisaVerMais
+          ? `<button onclick="toggleTexto(${index}, \`${event.content.replace(
+              /`/g,
+              "\\`"
+            )}\`)">Ver mais</button>`
+          : ""
+      }
+    </div>
+  `;
+            })
+
+            .join("");
+        })
+        .catch((err) => {
+          document.getElementById("evento").innerHTML =
+            "<p>Erro ao carregar eventos.</p>";
+        });
+
+      function toggleTexto(index, conteudoCompleto) {
+        const paragrafo = document.getElementById(`conteudo-${index}`);
+        const botao = paragrafo.nextElementSibling;
+
+        if (botao.innerText === "Ver mais") {
+          paragrafo.innerText = conteudoCompleto;
+          botao.innerText = "Ver menos";
+        } else {
+          paragrafo.innerText = conteudoCompleto.substring(0, 150) + "...";
+          botao.innerText = "Ver mais";
+        }
+      }
+    </script>
   </body>
 </html>

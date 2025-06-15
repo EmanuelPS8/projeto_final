@@ -6,6 +6,7 @@
     <title>Notícias</title>
     <link rel="stylesheet" href="/css/style_noticia.css" />
   </head>
+  <script></script>
   <body>
     <header>
       <nav class="nav">
@@ -14,25 +15,73 @@
     </header>
 
     <main class="noticias">
-      <h2>Notícias taltal</h2>
-
+      <h2>Notícias</h2>
       <div class="cartao-noticia">
-        <a href="#">
-          <h3>Notícia 1</h3>
-          <p>Resumo ou introdução da notícia número 1...</p>
-        </a>
-      </div>
-
-      <div class="cartao-noticia">
-        <a href="#">
-          <h3>Notícia 2</h3>
-          <p>Resumo ou introdução da notícia número 2...</p>
-        </a>
+        <div id="news-list"></div>
       </div>
 
       <!-- Adicione mais cartões conforme necessário -->
     </main>
 
     <footer></footer>
+    <script>
+      fetch("http://localhost:5000/api/news")
+        .then((response) => response.json())
+        .then((newsArray) => {
+          const container = document.getElementById("news-list");
+
+          if (newsArray.length === 0) {
+            container.innerHTML = "<p>Nenhuma notícia cadastrada.</p>";
+            return;
+          }
+
+          container.innerHTML = newsArray
+            .map((news, index) => {
+              const resumo =
+                news.content.length > 150
+                  ? news.content.substring(0, 150) + "..."
+                  : news.content;
+
+              const precisaVerMais = news.content.length > 150;
+              const dataFormatada = new Date(news.date).toLocaleDateString(
+                "pt-BR"
+              );
+
+              return `
+            <div class="cartao-noticia">
+              <h3>${news.title}</h3>
+              <small>${dataFormatada}</small>
+              <p id="conteudo-${index}">${resumo}</p>
+              ${
+                precisaVerMais
+                  ? `<button onclick="toggleTexto(${index}, \`${news.content.replace(
+                      /`/g,
+                      "\\`"
+                    )}\`)">Ver mais</button>`
+                  : ""
+              }
+            </div>
+          `;
+            })
+            .join("");
+        })
+        .catch((err) => {
+          document.getElementById("news-list").innerHTML =
+            "<p>Erro ao carregar notícias.</p>";
+        });
+
+      function toggleTexto(index, conteudoCompleto) {
+        const paragrafo = document.getElementById(`conteudo-${index}`);
+        const botao = paragrafo.nextElementSibling;
+
+        if (botao.innerText === "Ver mais") {
+          paragrafo.innerText = conteudoCompleto;
+          botao.innerText = "Ver menos";
+        } else {
+          paragrafo.innerText = conteudoCompleto.substring(0, 150) + "...";
+          botao.innerText = "Ver mais";
+        }
+      }
+    </script>
   </body>
 </html>

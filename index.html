@@ -18,7 +18,7 @@
                 <li><a href="">Grupos de trabalho</a></li>
                 <li><a href="">Vídeos</a></li>
                 <li><a href="html/noticias.html">Notícias</a></li>
-                <li><a href="">Colunas</a></li>
+                <li><a href="html/colunas.html">Colunas</a></li>
                 <li><a href="html/galeria.html">Galeria</a></li>
                 <li><a href="html/agenda.html">Agenda</a></li>
                 </ul>
@@ -38,7 +38,7 @@
 
                 <section>
                     <article>
-                        <h2>Colunas</h2>
+                        <h2 class="colunas-h2"> <a href="html/colunas.html">Colunas</a></h2>
                         <div class="colunas">
                             <div class="coluna-img">
                                 <img src="img/col1.jpg" alt="">
@@ -64,33 +64,17 @@
 
                 <section>
                     <article>
-                        <h2>Agenda</h2>
-                        <div class="agenda">
-                            <div class="evento">
-                                <h3>Evento 1</h3>
-                                <p>Descrição do evento 1.</p>
-                                <p><strong>Data:</strong> 01/01/2024</p>
-                            </div>
-                            
-                            <div class="evento">
-                                <h3>Evento 2</h3>
-                                <p>Descrição do evento 2.</p>
-                                <p><strong>Data:</strong> 02/01/2024</p>
-                            </div>
+                        <div class="agenda" id="agenda-container">
+  <h2><a href="html/agenda.html">Agenda</a></h2>
+</div>
 
-                            <div class="evento">
-                                <h3>Evento 3</h3>
-                                <p>Descrição do evento 3.</p>
-                                <p><strong>Data:</strong> 03/01/2024</p>
-                            </div>
-                        </div>
                     </article>
                 </section>
 
                 <section>
                     <article>
                         <div class="galeria">
-                            <h2>Galeria</h2>
+                            <h2> <a href="html/galeria.html">Galeria</a></h2>
                             <div class="galeria-imagens">
                                 <img src="img/img1.jpg" alt="Imagem 1">
                                 <img src="img/img2.jpg" alt="Imagem 2">
@@ -104,33 +88,13 @@
             <aside>
                 <div class="noticias-aside">
                     <h2>Notícias taltal</h2>
-                    <ul>
-                        <li><a href="#">Notícia 1</a></li>
-                        <li><a href="#">Notícia 2</a></li>
-                    </ul>
+                    <ul id="noticias-recentes"></ul>
                 </div>
                 <div class="login-usuario">
                     <!-- Card com botão -->
                     <div class="card-login">
                     <h2>Área Restrita</h2>
-                    <button id="abrirModal">Login</button>
-                    </div>
-
-                    <!-- Modal -->
-                    <div id="modalLogin" class="modal">
-                        <div class="modal-conteudo">
-                            <span class="fechar" id="fecharModal">&times;</span>
-                            <h3>Login</h3>
-                            <form>
-                            <label for="email">E-mail:</label>
-                            <input type="email" id="email" required>
-
-                            <label for="senha">Senha:</label>
-                            <input type="password" id="senha" required>
-
-                            <button type="submit">Entrar</button>
-                            </form>
-                        </div>
+                    <button id="abrirModal"><a href="html/admin.html">Login</a></button>
                     </div>
                 </div>
             </aside>
@@ -166,5 +130,63 @@
 
         </footer>
         <script src="script/script.js"></script>
+        <script>
+  fetch("http://localhost:5000/api/news")
+    .then((response) => response.json())
+    .then((newsArray) => {
+      const ul = document.getElementById("noticias-recentes");
+
+      const maisRecentes = newsArray
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .slice(0, 2);
+
+      ul.innerHTML = maisRecentes
+        .map(news => `<li><a href="html/noticias.html">${news.title}</a></li>`)
+        .join('');
+    })
+    .catch(() => {
+      document.getElementById("noticias-recentes").innerHTML = "<li>Erro ao carregar notícias</li>";
+    });
+</script>
+<script>
+  fetch("http://localhost:5000/api/events")
+    .then((response) => response.json())
+    .then((eventArray) => {
+      const container = document.getElementById("agenda-container");
+
+      const proximosEventos = eventArray
+        .filter(e => new Date(e.date) >= new Date()) // só eventos futuros ou de hoje
+        .sort((a, b) => new Date(a.date) - new Date(b.date)) // ordem crescente
+        .slice(0, 3); // pega os 3 primeiros
+
+      if (proximosEventos.length === 0) {
+        container.innerHTML += "<p>Nenhum evento futuro cadastrado.</p>";
+        return;
+      }
+
+      proximosEventos.forEach(event => {
+        const dataBR = new Date(event.date).toLocaleDateString("pt-BR", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric"
+        });
+
+        container.innerHTML += `
+          <div class="evento">
+            <h3>${event.title}</h3>
+            <p>${event.content}</p>
+            <p><strong>Data:</strong> ${dataBR}</p>
+          </div>
+        `;
+      });
+    })
+    .catch((err) => {
+      document.getElementById("agenda-container").innerHTML +=
+        "<p>Erro ao carregar eventos.</p>";
+    });
+</script>
+
+
+
     </body>
 </html>
