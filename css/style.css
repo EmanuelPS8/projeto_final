@@ -4,6 +4,12 @@
   box-sizing: border-box;
 }
 
+body {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
 .logo {
   color: #333;
   font-size: 1.5rem;
@@ -64,7 +70,7 @@ header {
   position: relative;
   width: 100%;
   max-width: 700px;
-  margin: 50px auto; /* Centraliza o slider */
+  margin: 50px auto; /*Centraliza o slider */
   overflow: hidden;
 }
 
@@ -127,6 +133,7 @@ header {
   margin-top: 30px;
   border-radius: 6px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  text-align: center;
 }
 
 .noticias-aside h2 {
@@ -169,23 +176,34 @@ header {
 }
 
 .colunas {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  padding: 20px 0;
-  gap: 30px;
+  background-color: #f9f9f9;
+  border-left: 4px solid blue;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  text-align: left;
 }
 
-.colunas-h2 a {
-  font-size: 1.5rem;
-  margin-bottom: 15px;
+.colunas-h2 {
   color: rgb(41, 0, 221);
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+.colunas-h2 a {
   text-decoration: none;
+  color: rgb(41, 0, 221);
+}
+
+.colunas-container {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
 }
 
 .coluna-img {
-  text-align: center;
-  max-width: 200px;
+  width: 150px;
 }
 
 .coluna-img img {
@@ -193,18 +211,7 @@ header {
   height: 150px;
   object-fit: cover;
   border-radius: 50%;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  margin-bottom: 10px;
-}
-
-.coluna-img h3 {
-  font-size: 1rem;
-  margin: 5px 0;
-}
-
-.coluna-img p {
-  font-size: 0.9rem;
-  color: #333;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Estiliza a seção agenda */
@@ -386,4 +393,152 @@ footer {
 
 .card-login button:hover {
   background-color: darkblue;
+}
+
+.sobre-h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: rgb(41, 0, 221);
+}
+
+.sobre {
+  background-color: #f9f9f9;
+  border-left: 4px solid blue;
+  margin-top: 10px;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  /* max-width: 700px; */
+  text-align: left;
+}
+
+.busca {
+  display: flex;
+  justify-content: right;
+  max-width: 400px;
+  padding: 10px;
+}
+
+.busca input[type="text"] {
+  width: 100%;
+  padding: 10px 16px;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  outline: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.busca input[type="text"]:focus {
+  border-color: #0077cc;
+  box-shadow: 0 0 0 4px rgba(0, 119, 204, 0.2);
+}
+
+@media (max-width: 650px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .logo {
+    font-size: 1.2rem;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .nav {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .nav ul {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .busca input[type="text"] {
+    width: 100%;
+    max-width: 400px; /* adiciona limite */
+    padding: 10px 16px;
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .busca {
+    justify-content: center;
+    display: flex;
+    width: 100%;
+    padding: 10px 20px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .conteudo {
+    flex-direction: column;
+    padding: 0 10px;
+  }
+
+  .principal,
+  .noticias-aside {
+    width: 100%;
+  }
+
+  .colunas-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .galeria-imagens {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .conteudo {
+    flex-direction: column;
+    padding: 0 20px;
+  }
+
+  .principal,
+  .noticias-aside {
+    width: 100%;
+  }
+
+  .footer-container {
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .colunas-container {
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .galeria-imagens {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+
+@media (min-width: 1380px) {
+  body {
+    background-color: #fff; /* se quiser evitar grandes bordas brancas */
+  }
+
+  .container {
+    max-width: 1400px;
+  }
 }
