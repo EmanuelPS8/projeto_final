@@ -31,16 +31,3 @@ function Atualizar() {
     alert("O Cont é maior que o número de elementos");
   }
 }
-
-// card de login
-const abrirModal = document.getElementById("abrirModal");
-const modal = document.getElementById("modalLogin");
-const fechar = document.getElementById("fecharModal");
-
-abrirModal.onclick = () => (modal.style.display = "block");
-fechar.onclick = () => (modal.style.display = "none");
-window.onclick = (e) => {
-  if (e.target === modal) modal.style.display = "none";
-};
-
-// <--------------------------------------------->
