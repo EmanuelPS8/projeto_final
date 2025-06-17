@@ -14,6 +14,15 @@
       </nav>
     </header>
 
+    <div class="busca">
+      <input
+        type="text"
+        placeholder="Buscar"
+        title="Digite os termos que você deseja procurar."
+        aria-label="Buscar"
+      />
+    </div>
+
     <main class="noticias">
       <h2>Notícias</h2>
       <div class="cartao-noticia">
@@ -75,7 +84,18 @@
               return `
             <div class="cartao-noticia">
               <h3>${news.title}</h3>
-              <small>${dataFormatada}</small>
+              <small>${dataFormatada} - <a href="coluna.html?autor=${encodeURIComponent(
+                news.author
+              )}">${news.author}</a></small>
+              ${
+                news.image
+                  ? `<img src="${news.image}" alt="Imagem da notícia" style="max-width: 300px; height: auto; display: block; margin-top: 10px;">`
+                  : ""
+              }
+
+              ${news.video ? embedVideo(news.video) : ""}
+
+
               <p id="conteudo-${index}">${resumo}</p>
               ${
                 precisaVerMais
@@ -106,6 +126,30 @@
           paragrafo.innerText = conteudoCompleto.substring(0, 150) + "...";
           botao.innerText = "Ver mais";
         }
+      }
+
+      function extractYouTubeID(url) {
+        const regex =
+          /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([^\s&]+)/;
+        const match = url.match(regex);
+        return match ? match[1] : "";
+      }
+
+      function embedVideo(videoUrl) {
+        if (!videoUrl) return "";
+
+        if (videoUrl.includes("youtube.com") || videoUrl.includes("youtu.be")) {
+          const id = extractYouTubeID(videoUrl);
+          return `<iframe width="100%" height="315" src="https://www.youtube.com/embed/${id}" frameborder="0" allowfullscreen style="margin-top:10px;"></iframe>`;
+        }
+
+        if (videoUrl.includes("drive.google.com")) {
+          const idMatch = videoUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
+          const id = idMatch ? idMatch[1] : "";
+          return `<iframe src="https://drive.google.com/file/d/${id}/preview" width="100%" height="315" style="margin-top:10px;" allow="autoplay"></iframe>`;
+        }
+
+        return `<video controls src="${videoUrl}" style="max-width:100%; margin-top:10px;"></video>`;
       }
     </script>
   </body>

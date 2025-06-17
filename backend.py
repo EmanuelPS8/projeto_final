@@ -20,14 +20,22 @@ class News(db.Model):
     title = db.Column(db.String(255))
     content = db.Column(db.Text)
     date = db.Column(db.String(20))
+    author = db.Column(db.String(255))  # NOVO CAMPO
+    image = db.Column(db.String(500))  # Novo campo
+    video = db.Column(db.String(500))  # Novo campo
 
     def to_dict(self):
         return {
             'id': self.id,
             'title': self.title,
             'content': self.content,
-            'date': self.date
+            'date': self.date,
+            'author': self.author,
+            'image': self.image,
+            'video': self.video
         }
+
+
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -42,6 +50,24 @@ class Event(db.Model):
             'content': self.content,
             'date': self.date
         }
+    
+class GalleryItem(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.String(20))
+    description = db.Column(db.Text)
+    image = db.Column(db.String(500))
+    video = db.Column(db.String(500))
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'date': self.date,
+            'description': self.description,
+            'image': self.image,
+            'video': self.video
+        }
+
+
 
 # === AUTENTICAÇÃO SIMPLES ===
 ADMIN_USERNAME = 'admin'
@@ -79,7 +105,14 @@ def get_news():
 @require_auth
 def add_news():
     data = request.json
-    item = News(title=data['title'], content=data['content'], date=data['date'])
+    item = News(
+    title=data['title'],
+    content=data['content'],
+    date=data['date'],
+    author=data['author'],
+    image=data.get('image'),
+    video=data.get('video'))
+
     db.session.add(item)
     db.session.commit()
     return jsonify({'success': True})
@@ -111,6 +144,33 @@ def add_event():
 @require_auth
 def delete_event(item_id):
     item = Event.query.get_or_404(item_id)
+    db.session.delete(item)
+    db.session.commit()
+    return jsonify({'success': True})
+
+@app.route('/api/gallery', methods=['GET'])
+def get_gallery():
+    items = GalleryItem.query.order_by(GalleryItem.date.desc()).all()
+    return jsonify([i.to_dict() for i in items])
+
+@app.route('/api/gallery', methods=['POST'])
+@require_auth
+def add_gallery():
+    data = request.json
+    item = GalleryItem(
+        date=data['date'],
+        description=data['description'],
+        image=data.get('image', ''),
+        video=data.get('video', '')
+    )
+    db.session.add(item)
+    db.session.commit()
+    return jsonify({'success': True})
+
+@app.route('/api/gallery/<int:item_id>', methods=['DELETE'])
+@require_auth
+def delete_gallery(item_id):
+    item = GalleryItem.query.get_or_404(item_id)
     db.session.delete(item)
     db.session.commit()
     return jsonify({'success': True})

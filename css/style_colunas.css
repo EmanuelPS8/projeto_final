@@ -109,35 +109,6 @@ header {
   border-radius: 10px;
 }
 
-.nav ul {
-  list-style: none;
-  display: flex;
-  gap: 32px;
-  margin: 0;
-  padding: 0;
-  justify-content: center;
-}
-
-.nav ul li {
-  display: inline-block;
-}
-
-.nav ul li a {
-  text-decoration: none;
-  color: #2a2ad1;
-  font-weight: 500;
-  font-size: 1.1rem;
-  padding: 8px 16px;
-  border-radius: 6px;
-  transition: background 0.18s, color 0.18s;
-}
-
-.nav ul li a:hover,
-.nav ul li a:focus {
-  background: #2a2ad1;
-  color: #fff;
-}
-
 @media (max-width: 700px) {
   header {
     flex-direction: column;
@@ -209,4 +180,28 @@ footer {
 .footer-col p {
   font-size: 0.9rem;
   margin: 6px 0;
+}
+
+.busca {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 400px;
+  padding: 10px;
+}
+
+.busca input[type="text"] {
+  width: 100%;
+  padding: 10px 16px;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  outline: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.busca input[type="text"]:focus {
+  border-color: #0077cc;
+  box-shadow: 0 0 0 4px rgba(0, 119, 204, 0.2);
 }

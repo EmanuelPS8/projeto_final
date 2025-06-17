@@ -141,3 +141,27 @@ footer {
   font-size: 0.9rem;
   margin: 6px 0;
 }
+
+.busca {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 400px;
+  padding: 10px;
+}
+
+.busca input[type="text"] {
+  width: 100%;
+  padding: 10px 16px;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  outline: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.busca input[type="text"]:focus {
+  border-color: #0077cc;
+  box-shadow: 0 0 0 4px rgba(0, 119, 204, 0.2);
+}
