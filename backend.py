@@ -2,9 +2,25 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 import uuid
+import os
+from werkzeug.utils import secure_filename
+
+UPLOAD_FOLDER = os.path.join('static', 'uploads')
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+# Cria o diretório se não existir
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 app = Flask(__name__)
 CORS(app)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Configuração do banco de dados (ajuste conforme necessário)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:1234@localhost:3306/projeto_web'
@@ -66,7 +82,7 @@ class GalleryItem(db.Model):
             'image': self.image,
             'video': self.video
         }
-
+    
 
 
 # === AUTENTICAÇÃO SIMPLES ===
@@ -148,10 +164,13 @@ def delete_event(item_id):
     db.session.commit()
     return jsonify({'success': True})
 
-@app.route('/api/gallery', methods=['GET'])
+@app.route("/api/gallery", methods=["GET"])
 def get_gallery():
     items = GalleryItem.query.order_by(GalleryItem.date.desc()).all()
-    return jsonify([i.to_dict() for i in items])
+    return jsonify([item.to_dict() for item in items])
+
+
+
 
 @app.route('/api/gallery', methods=['POST'])
 @require_auth
@@ -174,6 +193,24 @@ def delete_gallery(item_id):
     db.session.delete(item)
     db.session.commit()
     return jsonify({'success': True})
+
+
+# === UPLOAD DE ARQUIVOS ===
+@app.route('/api/upload-image', methods=['POST'])
+@require_auth
+def upload_image():
+    if 'file' not in request.files:
+        return jsonify({'error': 'Nenhum arquivo enviado'}), 400
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'error': 'Nome do arquivo vazio'}), 400
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(filepath)
+        return jsonify({'image_url': f'/static/uploads/{filename}'})
+    return jsonify({'error': 'Arquivo inválido'}), 400
+
 
 # === RODAR SERVIDOR ===
 if __name__ == '__main__':

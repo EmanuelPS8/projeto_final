@@ -66,70 +66,94 @@
     <script>
       const adminContainer = document.getElementById("admin-container");
       const loginForm = document.getElementById("login-form");
-      let token = "";
+      let token = localStorage.getItem("auth_token") || "";
+
+      // Se já houver token salvo, tenta carregar o painel
+      if (token) {
+        loadAdminPanel();
+      }
 
       loginForm.onsubmit = async (e) => {
         e.preventDefault();
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
+
         const res = await fetch("http://localhost:5000/api/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, password }),
         });
+
         if (res.ok) {
-          token = (await res.json()).token;
+          const data = await res.json();
+          token = data.token;
+          localStorage.setItem("auth_token", token);
           loadAdminPanel();
         } else {
           alert("Login failed");
         }
       };
 
+      function logout() {
+        token = "";
+        localStorage.removeItem("auth_token");
+        adminContainer.innerHTML = `
+      <div class="admin-title">Login Administrador</div>
+      <form id="login-form" class="admin-form">
+        <input type="text" id="username" placeholder="Nome Usuário" required />
+        <input type="password" id="password" placeholder="Senha" required />
+        <button type="submit">Login</button>
+      </form>
+    `;
+        document.getElementById("login-form").onsubmit = loginForm.onsubmit;
+      }
+
       async function loadAdminPanel() {
         adminContainer.innerHTML = `
-            <div class="admin-title">Painel Administrador <button class="logout-btn" onclick="location.reload()">Sair</button></div>
-            <div class="admin-section">
-                <h3>Notícias</h3>
-                <!-- ...cabeçalho HTML igual... -->
-                <form id="news-form" class="admin-form">
-                <input type="text" id="news-title" placeholder="Título" required>
-                <input type="text" id="news-author" placeholder="Autor" required>
-                <input type="text" id="news-image" placeholder="URL da Imagem (opcional)">
-                <input type="text" id="news-video" placeholder="URL do Vídeo (opcional)">
-                <textarea id="news-content" placeholder="Conteúdo" required></textarea>
-                <input type="date" id="news-date" required>
-                <button type="submit">Adicionar Notícia</button>
-                </form>
-                <ul class="admin-list" id="news-list"></ul>
-            </div>
-            <div class="admin-section">
-                <h3>Eventos</h3>
-                <form id="event-form" class="admin-form">
-                    <input type="text" id="event-title" placeholder="Título" required>
-                    <textarea id="event-content" placeholder="Conteúdo" required></textarea>
-                    <input type="date" id="event-date" required>
-                    <button type="submit">Adicionar Evento</button>
-                </form>
-                <ul class="admin-list" id="event-list"></ul>
-            </div>
-            <div class="admin-section">
-                <h3>Galeria</h3>
-                <form id="gallery-form" class="admin-form">
-                    <input type="date" id="gallery-date" required />
-                    <textarea id="gallery-description" placeholder="Descrição" required></textarea>
-                    <input type="text" id="gallery-image" placeholder="URL da Imagem (opcional)" />
-                    <input type="text" id="gallery-video" placeholder="URL do Vídeo do Drive (opcional)" />
-                    <button type="submit">Adicionar</button>
-                </form>
-                <ul class="admin-list" id="gallery-list"></ul>
-            </div>
+      <div class="admin-title">Painel Administrador <button class="logout-btn" onclick="logout()">Sair</button></div>
+      <div class="admin-section">
+          <h3>Notícias</h3>
+          <form id="news-form" class="admin-form">
+            <input type="text" id="news-title" placeholder="Título" required>
+            <input type="text" id="news-author" placeholder="Autor" required>
+            <input type="text" id="news-image" placeholder="URL da Imagem (opcional)">
+            <input type="text" id="news-video" placeholder="URL do Vídeo (opcional)">
+            <textarea id="news-content" placeholder="Conteúdo" required></textarea>
+            <input type="date" id="news-date" required>
+            <button type="submit">Adicionar Notícia</button>
+          </form>
+          <ul class="admin-list" id="news-list"></ul>
+      </div>
+      <div class="admin-section">
+          <h3>Eventos</h3>
+          <form id="event-form" class="admin-form">
+              <input type="text" id="event-title" placeholder="Título" required>
+              <textarea id="event-content" placeholder="Conteúdo" required></textarea>
+              <input type="date" id="event-date" required>
+              <button type="submit">Adicionar Evento</button>
+          </form>
+          <ul class="admin-list" id="event-list"></ul>
+      </div>
+      <div class="admin-section">
+          <h3>Galeria</h3>
+          <form id="gallery-form" class="admin-form" enctype="multipart/form-data">
+              <input type="date" id="gallery-date" required />
+              <textarea id="gallery-description" placeholder="Descrição" required></textarea>
+              <input type="text" id="gallery-image" placeholder="URL da Imagem (ex: https://...)" />
+              <input type="text" id="gallery-video" placeholder="URL do Vídeo do Drive (opcional)" />
+              <button type="submit">Adicionar</button>
+          </form>
+          <ul class="admin-list" id="gallery-list"></ul>
+      </div>
+    `;
 
-
-        `;
-        loadNews();
-        loadEvents();
         document.getElementById("news-form").onsubmit = addNews;
         document.getElementById("event-form").onsubmit = addEvent;
+        document.getElementById("gallery-form").onsubmit = addGallery;
+
+        loadNews();
+        loadEvents();
+        loadGallery();
       }
 
       async function loadNews() {
@@ -145,19 +169,7 @@
           )
           .join("");
       }
-      async function loadEvents() {
-        const res = await fetch("http://localhost:5000/api/events", {
-          headers: { Authorization: "Bearer " + token },
-        });
-        const events = await res.json();
-        const list = document.getElementById("event-list");
-        list.innerHTML = events
-          .map(
-            (item) =>
-              `<li><b>${item.title}</b> (${item.date}) <button onclick="deleteEvent(${item.id})">Deletar</button></li>`
-          )
-          .join("");
-      }
+
       async function addNews(e) {
         e.preventDefault();
         const title = document.getElementById("news-title").value;
@@ -180,11 +192,34 @@
         e.target.reset();
       }
 
+      async function deleteNews(id) {
+        await fetch(`http://localhost:5000/api/news/${id}`, {
+          method: "DELETE",
+          headers: { Authorization: "Bearer " + token },
+        });
+        loadNews();
+      }
+
+      async function loadEvents() {
+        const res = await fetch("http://localhost:5000/api/events", {
+          headers: { Authorization: "Bearer " + token },
+        });
+        const events = await res.json();
+        const list = document.getElementById("event-list");
+        list.innerHTML = events
+          .map(
+            (item) =>
+              `<li><b>${item.title}</b> (${item.date}) <button onclick="deleteEvent(${item.id})">Deletar</button></li>`
+          )
+          .join("");
+      }
+
       async function addEvent(e) {
         e.preventDefault();
         const title = document.getElementById("event-title").value;
         const content = document.getElementById("event-content").value;
         const date = document.getElementById("event-date").value;
+
         await fetch("http://localhost:5000/api/events", {
           method: "POST",
           headers: {
@@ -193,16 +228,11 @@
           },
           body: JSON.stringify({ title, content, date }),
         });
+
         loadEvents();
         e.target.reset();
       }
-      async function deleteNews(id) {
-        await fetch(`http://localhost:5000/api/news/${id}`, {
-          method: "DELETE",
-          headers: { Authorization: "Bearer " + token },
-        });
-        loadNews();
-      }
+
       async function deleteEvent(id) {
         await fetch(`http://localhost:5000/api/events/${id}`, {
           method: "DELETE",
@@ -210,7 +240,6 @@
         });
         loadEvents();
       }
-      document.getElementById("gallery-form").onsubmit = addGallery;
 
       async function loadGallery() {
         const res = await fetch("http://localhost:5000/api/gallery", {
@@ -221,9 +250,9 @@
         list.innerHTML = items
           .map(
             (item) => `
-    <li><b>${item.date}</b> - ${item.description.substring(0, 40)}...
-    <button onclick="deleteGallery(${item.id})">Deletar</button></li>
-  `
+        <li><b>${item.date}</b> - ${item.description.substring(0, 40)}...
+        <button onclick="deleteGallery(${item.id})">Deletar</button></li>
+      `
           )
           .join("");
       }
@@ -234,7 +263,7 @@
         const description = document.getElementById(
           "gallery-description"
         ).value;
-        const image = document.getElementById("gallery-image").value;
+        const imageUrl = document.getElementById("gallery-image").value;
         const video = document.getElementById("gallery-video").value;
 
         await fetch("http://localhost:5000/api/gallery", {
@@ -243,7 +272,7 @@
             "Content-Type": "application/json",
             Authorization: "Bearer " + token,
           },
-          body: JSON.stringify({ date, description, image, video }),
+          body: JSON.stringify({ date, description, image: imageUrl, video }),
         });
 
         loadGallery();

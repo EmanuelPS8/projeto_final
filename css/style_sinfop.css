@@ -1,0 +1,11 @@
+.nav a {
+  text-decoration: none;
+  color: black;
+}
+
+.nav h1 {
+  font-family: monospace;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+}
