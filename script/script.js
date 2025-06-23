@@ -1,5 +1,5 @@
 window.onload = Inicio;
-const caminho = "../img/";
+const caminho = "img/";
 const prefixo = "img";
 const extensao = ".jpg";
 var cont = 0;
