@@ -16,11 +16,17 @@ var moldura = document.getElementById("moldura");
 
 function Inicio() {
   botaoAvancar.onclick = Avancar;
+  botaoVoltar.onclick = Voltar;
   Atualizar();
 }
 
 function Avancar() {
   cont = (cont + 1) % lista.length;
+  Atualizar();
+}
+
+function Voltar() {
+  cont = (cont - 1 + lista.length) % lista.length;
   Atualizar();
 }
 

@@ -5,18 +5,25 @@
 }
 
 body {
-  max-width: 1500px;
-  margin: 0 auto;
-  padding: 0 20px;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", sans-serif;
 }
 
 .logo {
-  color: #333;
-  font-size: 1.5rem;
   display: flex;
   align-items: center;
-  font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
+  margin-top: -10px;
+}
+.logo img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-right: 15px;
+  display: block;
+  margin: auto;
 }
 
 .logo a {
@@ -61,11 +68,6 @@ header {
 .nav ul li a:focus {
   background: #2a2ad1;
   color: #fff;
-}
-
-.busca input {
-  padding: 6px;
-  border-radius: 4px;
 }
 
 .slider {
@@ -116,19 +118,24 @@ header {
 
 .conteudo {
   display: flex;
-  align-items: flex-start;
   justify-content: space-between;
-  gap: 20px;
-  padding: 0 30px;
-  max-width: 100%;
+  gap: 24px;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .principal {
-  width: 900px;
+  flex: 1;
+  min-width: 600px;
 }
 
 .noticias-aside {
-  width: 300px;
+  width: 28%;
+  min-width: 250px;
+  max-width: 320px;
   background-color: #f9f9f9;
   padding: 20px;
   border-left: 4px solid rgb(41, 0, 221); /* mesmo destaque da agenda */
