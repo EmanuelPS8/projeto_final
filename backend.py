@@ -23,7 +23,6 @@ CORS(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Configuração do banco de dados (ajuste conforme necessário)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:1234@localhost:3306/projeto_web'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config.from_pyfile('config.py')
 
@@ -216,4 +215,6 @@ def upload_image():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()  # cria tabelas se não existirem
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
+
