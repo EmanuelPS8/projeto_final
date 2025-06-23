@@ -142,7 +142,7 @@ header {
 
 .principal {
   flex: 1;
-  min-width: 600px;
+  min-width: 0; /* permite que a largura se ajuste */
 }
 
 .noticias-aside {
