@@ -4,6 +4,18 @@
   box-sizing: border-box;
 }
 
+/* Animação da página */
+.fade-in-page {
+  opacity: 0;
+  animation: fadeInPage 1s ease forwards;
+}
+
+@keyframes fadeInPage {
+  to {
+    opacity: 1;
+  }
+}
+
 body {
   max-width: 100%;
   margin: 0;
@@ -76,6 +88,7 @@ header {
   max-width: 700px;
   margin: 50px auto; /*Centraliza o slider */
   overflow: hidden;
+  margin-top: 25px;
 }
 
 .slider img {
@@ -335,6 +348,13 @@ footer {
   min-width: 200px;
 }
 
+.footer-col a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
 .footer-col h4 {
   font-size: 1.1rem;
   margin-bottom: 10px;
@@ -422,6 +442,11 @@ footer {
   text-align: left;
 }
 
+.sobre a {
+  text-decoration: none;
+  color: rgb(41, 0, 221);
+}
+
 .busca {
   display: flex;
   justify-content: right;
@@ -450,6 +475,11 @@ footer {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
+  }
+
+  .slider img {
+    max-height: 250px;
+    object-fit: cover;
   }
 
   .logo {
@@ -549,5 +579,60 @@ footer {
 
   .container {
     max-width: 1400px;
+  }
+}
+
+@media (max-width: 400px) {
+  .logo img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .nav {
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav ul {
+    gap: 10px;
+  }
+
+  .nav ul li a {
+    font-size: 1rem;
+    padding: 6px 12px;
+  }
+
+  .coluna-img {
+    width: 100%;
+    text-align: center;
+  }
+
+  .coluna-img img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .footer-col p,
+  .footer-col a {
+    font-size: 0.85rem;
+  }
+
+  .card-login {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .slider {
+    max-width: 100%;
+    height: auto;
+    margin: 20px auto;
+  }
+
+  .slider img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
   }
 }

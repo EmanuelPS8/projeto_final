@@ -4,6 +4,11 @@ const prefixo = "img";
 const extensao = ".jpg";
 var cont = 0;
 
+// Animação de fade-in ao carregar a página
+window.addEventListener("DOMContentLoaded", () => {
+  document.body.classList.add("fade-in-page");
+});
+
 var lista = [
   { img: 1, titulo: "Imagem 1", descricao: "Descrição da Imagem 1" },
   { img: 2, titulo: "Imagem 2", descricao: "Descrição da Imagem 2" },

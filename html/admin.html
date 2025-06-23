@@ -3,6 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Site/blog do GEPPHAE" />
+    <meta name="author" content="Emanuel Pereira Schlickmann" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="img/logo.jpeg" type="image/x-icon" />
     <title>Admin Panel</title>
     <link rel="stylesheet" href="../css/style_colunas.css" />
     <style>
@@ -78,11 +82,14 @@
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
 
-        const res = await fetch("http://localhost:5000/api/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, password }),
-        });
+        const res = await fetch(
+          "https://projeto-final-flask.onrender.com/api/login",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password }),
+          }
+        );
 
         if (res.ok) {
           const data = await res.json();
@@ -157,9 +164,12 @@
       }
 
       async function loadNews() {
-        const res = await fetch("http://localhost:5000/api/news", {
-          headers: { Authorization: "Bearer " + token },
-        });
+        const res = await fetch(
+          "https://projeto-final-flask.onrender.com/api/news",
+          {
+            headers: { Authorization: "Bearer " + token },
+          }
+        );
         const news = await res.json();
         const list = document.getElementById("news-list");
         list.innerHTML = news
@@ -179,7 +189,7 @@
         const image = document.getElementById("news-image").value;
         const video = document.getElementById("news-video").value;
 
-        await fetch("http://localhost:5000/api/news", {
+        await fetch("https://projeto-final-flask.onrender.com/api/news", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -193,7 +203,7 @@
       }
 
       async function deleteNews(id) {
-        await fetch(`http://localhost:5000/api/news/${id}`, {
+        await fetch(`https://projeto-final-flask.onrender.com/api/news/${id}`, {
           method: "DELETE",
           headers: { Authorization: "Bearer " + token },
         });
@@ -201,9 +211,12 @@
       }
 
       async function loadEvents() {
-        const res = await fetch("http://localhost:5000/api/events", {
-          headers: { Authorization: "Bearer " + token },
-        });
+        const res = await fetch(
+          "https://projeto-final-flask.onrender.com/api/events",
+          {
+            headers: { Authorization: "Bearer " + token },
+          }
+        );
         const events = await res.json();
         const list = document.getElementById("event-list");
         list.innerHTML = events
@@ -220,7 +233,7 @@
         const content = document.getElementById("event-content").value;
         const date = document.getElementById("event-date").value;
 
-        await fetch("http://localhost:5000/api/events", {
+        await fetch("https://projeto-final-flask.onrender.com/api/events", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -234,17 +247,23 @@
       }
 
       async function deleteEvent(id) {
-        await fetch(`http://localhost:5000/api/events/${id}`, {
-          method: "DELETE",
-          headers: { Authorization: "Bearer " + token },
-        });
+        await fetch(
+          `https://projeto-final-flask.onrender.com/api/events/${id}`,
+          {
+            method: "DELETE",
+            headers: { Authorization: "Bearer " + token },
+          }
+        );
         loadEvents();
       }
 
       async function loadGallery() {
-        const res = await fetch("http://localhost:5000/api/gallery", {
-          headers: { Authorization: "Bearer " + token },
-        });
+        const res = await fetch(
+          "https://projeto-final-flask.onrender.com/api/gallery",
+          {
+            headers: { Authorization: "Bearer " + token },
+          }
+        );
         const items = await res.json();
         const list = document.getElementById("gallery-list");
         list.innerHTML = items
@@ -266,7 +285,7 @@
         const imageUrl = document.getElementById("gallery-image").value;
         const video = document.getElementById("gallery-video").value;
 
-        await fetch("http://localhost:5000/api/gallery", {
+        await fetch("https://projeto-final-flask.onrender.com/api/gallery", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -280,10 +299,13 @@
       }
 
       async function deleteGallery(id) {
-        await fetch(`http://localhost:5000/api/gallery/${id}`, {
-          method: "DELETE",
-          headers: { Authorization: "Bearer " + token },
-        });
+        await fetch(
+          `https://projeto-final-flask.onrender.com/api/gallery/${id}`,
+          {
+            method: "DELETE",
+            headers: { Authorization: "Bearer " + token },
+          }
+        );
         loadGallery();
       }
     </script>

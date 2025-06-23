@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Projeto de exemplo" />
+    <meta name="description" content="Site/blog do GEPPHAE" />
     <meta name="author" content="Emanuel Pereira Schlickmann" />
     <meta name="robots" content="index, follow" />
-    <title>Projeto</title>
+    <link rel="icon" href="img/logo.jpeg" type="image/x-icon" />
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="icon" href="img/..." type="image/x-icon" />
+    <title>GEPPHAE</title>
   </head>
   <body>
     <header>
@@ -40,7 +40,7 @@
         <section>
           <article>
             <div class="sobre">
-              <h2 class="sobre-h2">Sobre</h2>
+              <h2 class="sobre-h2"><a href="html/sobre.html">Sobre</a></h2>
               <p>
                 Este é um projeto de exemplo para demonstrar o uso de HTML, CSS
                 e JavaScript. O objetivo é criar uma página web responsiva e
@@ -105,7 +105,7 @@
 
       <aside>
         <div class="noticias-aside">
-          <h2>Notícias taltal</h2>
+          <h2>Notícias</h2>
           <ul id="noticias-recentes"></ul>
         </div>
 
@@ -138,6 +138,16 @@
           <h4>Contato</h4>
           <p>Email: email@.com</p>
           <p>Telefone: (00) 0000-0000</p>
+          <p>
+            <img
+              src="img/instagram.png"
+              alt="Instagram"
+              style="width: 16px; vertical-align: middle; margin-right: 5px"
+            />
+            <a href="https://www.instagram.com/gepphae/" target="_blank"
+              >Instagram</a
+            >
+          </p>
         </div>
 
         <div class="footer-col">
@@ -152,7 +162,7 @@
     <script src="script/script.js"></script>
 
     <script>
-      fetch("http://localhost:5000/api/news")
+      fetch("https://projeto-final-flask.onrender.com/api/news")
         .then((response) => response.json())
         .then((newsArray) => {
           const ul = document.getElementById("noticias-recentes");
@@ -173,7 +183,7 @@
     </script>
 
     <script>
-      fetch("http://localhost:5000/api/events")
+      fetch("https://projeto-final-flask.onrender.com/api/events")
         .then((response) => response.json())
         .then((eventArray) => {
           const container = document.getElementById("agenda-container");
@@ -207,50 +217,6 @@
           document.getElementById("agenda-container").innerHTML +=
             "<p>Erro ao carregar eventos.</p>";
         });
-    </script>
-    <!-- busca não está funcionando -->
-    <script>
-      const buscaInput = document.querySelector(".busca input");
-
-      buscaInput.addEventListener("input", async (e) => {
-        const termo = e.target.value.toLowerCase();
-
-        const noticiasRes = await fetch("http://localhost:5000/api/news");
-        const noticias = await noticiasRes.json();
-        const noticiasFiltradas = noticias.filter(
-          (n) =>
-            n.title.toLowerCase().includes(termo) ||
-            n.content.toLowerCase().includes(termo)
-        );
-
-        const eventosRes = await fetch("http://localhost:5000/api/events");
-        const eventos = await eventosRes.json();
-        const eventosFiltrados = eventos.filter(
-          (e) =>
-            e.title.toLowerCase().includes(termo) ||
-            e.content.toLowerCase().includes(termo)
-        );
-
-        const resultadoHTML = document.createElement("div");
-        resultadoHTML.style.background = "#fff";
-        resultadoHTML.style.padding = "20px";
-        resultadoHTML.style.border = "1px solid #ccc";
-        resultadoHTML.style.margin = "20px";
-
-        resultadoHTML.innerHTML = `
-        <h2>Resultados da busca:</h2>
-        <h3>Notícias:</h3>
-        <ul>${noticiasFiltradas.map((n) => `<li>${n.title}</li>`).join("")}</ul>
-        <h3>Eventos:</h3>
-        <ul>${eventosFiltrados.map((e) => `<li>${e.title}</li>`).join("")}</ul>
-      `;
-
-        const existente = document.querySelector("#resultado-busca");
-        if (existente) existente.remove();
-
-        resultadoHTML.id = "resultado-busca";
-        document.body.appendChild(resultadoHTML);
-      });
     </script>
   </body>
 </html>
