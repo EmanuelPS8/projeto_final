@@ -73,7 +73,11 @@
             .map(
               (item) => `
         <div class="galeria-item">
-          <small>${new Date(item.date).toLocaleDateString("pt-BR")}</small>
+          <small>${(() => {
+            const [ano, mes, dia] = item.date.split("-");
+            return `${dia}/${mes}/${ano}`;
+          })()}</small>
+
           <p>${item.description}</p>
           ${
             item.image

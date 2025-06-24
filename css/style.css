@@ -85,7 +85,7 @@ header {
 .slider {
   position: relative;
   width: 100%;
-  max-width: 700px;
+  max-width: 500px;
   margin: 50px auto; /*Centraliza o slider */
   overflow: hidden;
   margin-top: 25px;

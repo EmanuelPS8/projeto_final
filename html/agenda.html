@@ -84,9 +84,8 @@
                   : event.content;
 
               const precisaVerMais = event.content.length > 150;
-              const dataFormatada = new Date(event.date).toLocaleDateString(
-                "pt-BR"
-              );
+              const [ano, mes, dia] = event.date.split("-");
+              const dataFormatada = `${dia}/${mes}/${ano}`;
 
               return `
     <div class="evento">

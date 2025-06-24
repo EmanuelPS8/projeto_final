@@ -80,9 +80,8 @@
                   : news.content;
 
               const precisaVerMais = news.content.length > 150;
-              const dataFormatada = new Date(news.date).toLocaleDateString(
-                "pt-BR"
-              );
+              const [ano, mes, dia] = news.date.split("-");
+              const dataFormatada = `${dia}/${mes}/${ano}`;
 
               return `
             <div class="cartao-noticia">
@@ -102,16 +101,19 @@
               <p id="conteudo-${index}">${resumo}</p>
               ${
                 precisaVerMais
-                  ? `<button onclick="toggleTexto(${index}, \`${news.content.replace(
-                      /`/g,
-                      "\\`"
-                    )}\`)">Ver mais</button>`
+                  ? `<button class="ver-mais" data-index="${index}" data-conteudo="${news.content
+                      .replace(/"/g, "&quot;")
+                      .replace(/'/g, "&apos;")
+                      .replace(/\n/g, "\\n")}">Ver mais</button>`
                   : ""
               }
+
             </div>
           `;
             })
             .join("");
+
+          toggleTexto();
         })
         .catch((err) => {
           document.getElementById("news-list").innerHTML =
@@ -119,16 +121,24 @@
         });
 
       function toggleTexto(index, conteudoCompleto) {
-        const paragrafo = document.getElementById(`conteudo-${index}`);
-        const botao = paragrafo.nextElementSibling;
+        document.querySelectorAll(".ver-mais").forEach((botao) => {
+          botao.addEventListener("click", () => {
+            const index = botao.dataset.index;
+            const conteudoCompleto = botao.dataset.conteudo.replace(
+              /\\n/g,
+              "\n"
+            );
+            const paragrafo = document.getElementById(`conteudo-${index}`);
 
-        if (botao.innerText === "Ver mais") {
-          paragrafo.innerText = conteudoCompleto;
-          botao.innerText = "Ver menos";
-        } else {
-          paragrafo.innerText = conteudoCompleto.substring(0, 150) + "...";
-          botao.innerText = "Ver mais";
-        }
+            if (botao.innerText === "Ver mais") {
+              paragrafo.innerText = conteudoCompleto;
+              botao.innerText = "Ver menos";
+            } else {
+              paragrafo.innerText = conteudoCompleto.substring(0, 150) + "...";
+              botao.innerText = "Ver mais";
+            }
+          });
+        });
       }
 
       function extractYouTubeID(url) {
