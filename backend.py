@@ -35,9 +35,9 @@ class News(db.Model):
     title = db.Column(db.String(255))
     content = db.Column(db.Text)
     date = db.Column(db.String(20))
-    author = db.Column(db.String(255))  # NOVO CAMPO
-    image = db.Column(db.String(500))  # Novo campo
-    video = db.Column(db.String(500))  # Novo campo
+    author = db.Column(db.String(255))  
+    image = db.Column(db.String(500))  
+    video = db.Column(db.String(500))  
 
     def to_dict(self):
         return {
