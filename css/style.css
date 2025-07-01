@@ -447,29 +447,6 @@ footer {
   color: rgb(41, 0, 221);
 }
 
-.busca {
-  display: flex;
-  justify-content: right;
-  max-width: 400px;
-  padding: 10px;
-}
-
-.busca input[type="text"] {
-  width: 100%;
-  padding: 10px 16px;
-  font-size: 1rem;
-  border: 2px solid #ccc;
-  border-radius: 30px;
-  transition: all 0.3s ease;
-  outline: none;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.busca input[type="text"]:focus {
-  border-color: #0077cc;
-  box-shadow: 0 0 0 4px rgba(0, 119, 204, 0.2);
-}
-
 @media (max-width: 650px) {
   header {
     flex-direction: column;
@@ -498,27 +475,6 @@ footer {
     flex-direction: column;
     align-items: center;
     width: 100%;
-  }
-
-  .busca input[type="text"] {
-    width: 100%;
-    max-width: 400px; /* adiciona limite */
-    padding: 10px 16px;
-    font-size: 1rem;
-    border: 2px solid #ccc;
-    border-radius: 30px;
-    transition: all 0.3s ease;
-    outline: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  }
-
-  .busca {
-    justify-content: center;
-    display: flex;
-    width: 100%;
-    padding: 10px 20px;
-    max-width: 400px;
-    margin: 0 auto;
   }
 
   .conteudo {
