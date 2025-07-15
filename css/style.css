@@ -408,7 +408,7 @@ footer {
 .card-login button {
   padding: 10px 20px;
   border: none;
-  background-color: blue;
+  background-color: rgb(255, 0, 0);
   color: #fff;
   border-radius: 4px;
   cursor: pointer;

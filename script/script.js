@@ -27,7 +27,9 @@ function Inicio() {
 
 function Avancar() {
   cont = (cont + 1) % lista.length;
-  Atualizar();
+  while (cont < 3) {
+    Atualizar();
+  }
 }
 
 function Voltar() {
